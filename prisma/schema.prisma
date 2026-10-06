@@ -13,3 +13,73 @@ datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
+
+enum Category {
+  ELEKTRONIK
+  KENDARAAN
+  PERHIASAN
+  DOKUMEN
+  FURNITUR
+  LAINNYA
+}
+
+enum DocType {
+  STRUK
+  GARANSI
+  SERTIFIKAT
+  LAINNYA
+}
+
+model User {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  name      String
+  password  String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  items     Item[]
+}
+
+model Item {
+  id            String     @id @default(cuid())
+  name          String
+  category      Category
+  brand         String?
+  serialNumber  String?
+  purchaseDate  DateTime?
+  purchasePrice Int?
+  location      String?
+  notes         String?    @db.Text
+  userId        String
+  user          User       @relation(fields: [userId], references: [id], onDelete: Cascade)
+  createdAt     DateTime   @default(now())
+  updateAt      DateTime   @updatedAt
+  photos        Photo[]
+  documents     Document[]
+
+  @@index([userId])
+  @@index([category])
+  @@index([userId, category])
+}
+
+model Photo {
+  id        String   @id @default(cuid())
+  url       String   @db.Text
+  itemId    String
+  item      Item     @relation(fields: [itemId], references: [id], onDelete: Cascade)
+  createdAt DateTime @default(now())
+
+  @@index([itemId])
+}
+
+model Document {
+  id        String   @id @default(cuid())
+  url       String   @db.Text
+  name      String // "Struk pembelian", "Kartu garansi"
+  type      DocType  @default(STRUK)
+  itemId    String
+  item      Item     @relation(fields: [itemId], references: [id], onDelete: Cascade)
+  createdAt DateTime @default(now())
+
+  @@index([itemId])
+}
