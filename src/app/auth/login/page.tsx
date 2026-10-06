@@ -28,7 +28,7 @@ export default function Login() {
                 if (res?.error) {
                     setError("Email atau password tidak cocok");
                 } else if (res?.ok) {
-                    router.push("/");
+                    router.push("/dashboard");
                     router.refresh();
                 }
             } catch (err) {
