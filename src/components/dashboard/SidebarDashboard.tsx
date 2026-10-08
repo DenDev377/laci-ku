@@ -14,12 +14,12 @@ export default function SidebarDashboard() {
         },
         {
             name: "Barang Berharga",
-            href: "/items",
+            href: "/dashboard/items",
             icon: <LayoutList className="w-5 h-5" />
         },
         {
             name: "Pengaturan",
-            href: "/settings",
+            href: "/dashboard/settings",
             icon: <Settings className="w-4 h-4" />
         }
 
