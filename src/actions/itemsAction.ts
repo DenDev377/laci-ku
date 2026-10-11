@@ -41,10 +41,29 @@ export async function createItem(formData: FormData) {
       await mkdir(uploadDir, { recursive: true });
     }
 
-    // 7. Tulis file tersebut ke dalam harddisk
     await writeFile(filePath, buffer);
 
     finalDocumentUrl = `/uploads/${uniqueName}`;
+  }
+
+  // Upload photos
+  const photoUrls: string[] = [];
+  for (const photo of photos) {
+    if (photo.size > 0) {
+      const bytes = await photo.arrayBuffer();
+      const buffer = Buffer.from(bytes);
+      const uniqueName = `${Date.now()}_${Math.random().toString(36).slice(2)}_${photo.name.replace(/\s+/g, "_")}`;
+
+      const uploadDir = path.join(process.cwd(), "public/uploads");
+      const filePath = path.join(uploadDir, uniqueName);
+
+      if (!fs.existsSync(uploadDir)) {
+        await mkdir(uploadDir, { recursive: true });
+      }
+
+      await writeFile(filePath, buffer);
+      photoUrls.push(`/uploads/${uniqueName}`);
+    }
   }
 
   await prisma.item.create({
@@ -59,7 +78,7 @@ export async function createItem(formData: FormData) {
       notes: notes || null,
       userId: session.user.id,
       photos: {
-        create: [{ url: "/uploads/foto1.jpg" }, { url: "/uploads/foto2.jpg" }],
+        create: photoUrls.map((url) => ({ url })),
       },
       ...(finalDocumentUrl && {
         documents: {
