@@ -94,3 +94,48 @@ export async function createItem(formData: FormData) {
 
   revalidatePath("/dashboard/items");
 }
+
+export async function deleteItem(itemId: string) {
+  const session = await getServerSession(authOptions);
+  if (!session?.user?.id) {
+    throw new Error("Anda harus login untuk menghapus item!");
+  }
+
+  // Verify ownership and get files to delete
+  const item = await prisma.item.findUnique({
+    where: { id: itemId },
+    include: { photos: true, documents: true },
+  });
+
+  if (!item) {
+    throw new Error("Item tidak ditemukan");
+  }
+
+  if (item.userId !== session.user.id) {
+    throw new Error("Anda tidak berhak menghapus item ini!");
+  }
+
+  // Delete physical files
+  const uploadDir = path.join(process.cwd(), "public/uploads");
+  
+  for (const photo of item.photos) {
+    const filePath = path.join(uploadDir, photo.url.replace("/uploads/", ""));
+    if (fs.existsSync(filePath)) {
+      await fs.promises.unlink(filePath);
+    }
+  }
+
+  for (const doc of item.documents) {
+    const filePath = path.join(uploadDir, doc.url.replace("/uploads/", ""));
+    if (fs.existsSync(filePath)) {
+      await fs.promises.unlink(filePath);
+    }
+  }
+
+  // Delete from database (cascade will handle photos & documents)
+  await prisma.item.delete({
+    where: { id: itemId },
+  });
+
+  revalidatePath("/dashboard/items");
+}
