@@ -133,7 +133,7 @@ export default function TableItem({ dataItem }: ItemProps) {
                             <button
                               className="p-2 text-gray-400 hover:text-blue-600 hover:bg-blue-50 rounded-lg transition-colors"
                               title="Edit"
-                              onClick={() => console.log("Edit", item.id)}
+                              onClick={() => router.push(`/dashboard/editItem/${item.id}`)}
                             >
                               <Edit className="w-4 h-4" />
                             </button>
