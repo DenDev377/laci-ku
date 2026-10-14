@@ -3,6 +3,7 @@ import { Category } from "@/generated/prisma/enums";
 
 export type ItemProps = {
   dataItem: Prisma.ItemGetPayload<{ include: { photos: true } }>[];
+  searchQuery?: string;
 };
 export type DataRecentItemsProps = {
   dataRecentItems: Prisma.ItemGetPayload<{ include: { photos: true } }>[];

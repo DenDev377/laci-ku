@@ -1,11 +1,11 @@
 "use client";
 import { ItemProps } from "@/types/Items";
-import { Edit, Trash2, Image, Plus } from "lucide-react";
+import { Edit, Trash2, Image, Plus, Search, RotateCcw } from "lucide-react";
 import { deleteItem } from "@/actions/itemsAction";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 
-export default function TableItem({ dataItem }: ItemProps) {
+export default function TableItem({ dataItem, searchQuery }: ItemProps) {
   const router = useRouter();
   const [deleteId, setDeleteId] = useState<string | null>(null);
 
@@ -26,24 +26,64 @@ export default function TableItem({ dataItem }: ItemProps) {
       setDeleteId(null);
     }
   }
+  
 
   return (
-    <div className="mt-16">
+    <div className="mt-8">
+      {searchQuery && (
+        <div className="mb-4 flex flex-wrap items-center justify-between gap-2 bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-sm text-slate-700">
+          <div className="flex items-center gap-2">
+            <Search className="w-4 h-4 text-slate-500 shrink-0" />
+            <span>
+              Menampilkan <strong>{dataItem.length}</strong> barang untuk pencarian:{" "}
+              <strong>&ldquo;{searchQuery}&rdquo;</strong>
+            </span>
+          </div>
+          <button
+            onClick={() => router.replace("/dashboard/items")}
+            className="inline-flex items-center gap-1.5 text-xs font-medium text-slate-600 hover:text-slate-900 bg-white border border-slate-200 px-3 py-1.5 rounded-lg hover:bg-slate-100 transition-colors shadow-xs"
+          >
+            <RotateCcw className="w-3.5 h-3.5" />
+            Reset Filter
+          </button>
+        </div>
+      )}
+
       {dataItem.length === 0 ? (
         <div className="bg-white rounded-xl border border-slate-200 p-12 text-center">
-          <Image className="w-16 h-16 mx-auto text-slate-300 mb-4" />
-          <h3 className="text-lg font-medium text-gray-900 mb-2">
-            Belum ada data barang
-          </h3>
-          <p className="text-gray-500 mb-6">
-            Mulai dengan menambahkan barang berharga pertama Anda.
-          </p>
-          <a
-            href="/dashboard/addItem"
-            className="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium text-white bg-blue-600 rounded-lg hover:bg-blue-700 transition-colors"
-          >
-            <Plus className="w-4 h-4" /> Tambah Barang
-          </a>
+          {searchQuery ? (
+            <>
+              <Search className="w-16 h-16 mx-auto text-slate-300 mb-4" />
+              <h3 className="text-lg font-medium text-gray-900 mb-2">
+                Tidak ada barang yang cocok
+              </h3>
+              <p className="text-gray-500 mb-6 max-w-md mx-auto text-sm">
+                Tidak ditemukan barang dengan kata kunci &ldquo;{searchQuery}&rdquo;. Coba periksa ejaan atau gunakan kata kunci lain.
+              </p>
+              <button
+                onClick={() => router.replace("/dashboard/items")}
+                className="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium text-slate-700 bg-slate-100 rounded-lg hover:bg-slate-200 transition-colors"
+              >
+                <RotateCcw className="w-4 h-4" /> Reset Pencarian
+              </button>
+            </>
+          ) : (
+            <>
+              <Image className="w-16 h-16 mx-auto text-slate-300 mb-4" />
+              <h3 className="text-lg font-medium text-gray-900 mb-2">
+                Belum ada data barang
+              </h3>
+              <p className="text-gray-500 mb-6">
+                Mulai dengan menambahkan barang berharga pertama Anda.
+              </p>
+              <a
+                href="/dashboard/addItem"
+                className="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium text-white bg-blue-600 rounded-lg hover:bg-blue-700 transition-colors"
+              >
+                <Plus className="w-4 h-4" /> Tambah Barang
+              </a>
+            </>
+          )}
         </div>
       ) : (
         <div className="flex flex-col">
