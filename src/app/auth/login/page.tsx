@@ -38,14 +38,17 @@ export default function Login() {
     };
 
     return (
-        <main className="min-h-screen flex items-center justify-center bg-slate-50 px-4">
-            <div className="w-full max-w-md bg-white rounded-3xl shadow-xl shadow-slate-200/50 border border-slate-100 p-8 sm:p-10">
+        <main className="min-h-screen flex items-center justify-center bg-slate-50 px-4 py-8">
+            <div className="w-full max-w-md bg-white rounded-3xl shadow-xl shadow-slate-200/50 border border-slate-100 p-6 sm:p-10">
                 <div className="mb-8">
-                    <h2 className="text-3xl text-gray-900 font-semibold">
-                        Masuk
+                    <Link href="/" className="inline-flex items-center gap-2 mb-4 text-xs font-semibold text-slate-500 hover:text-slate-900 transition-colors">
+                        ← Kembali ke Beranda
+                    </Link>
+                    <h2 className="text-2xl sm:text-3xl text-gray-900 font-bold tracking-tight">
+                        Masuk ke LaciKu
                     </h2>
-                    <p className="mt-2 text-sm text-gray-500">
-                        Masuk untuk mengakses dashboard kamu
+                    <p className="mt-1.5 text-sm text-gray-500">
+                        Masuk untuk mengelola seluruh barang berharga Anda
                     </p>
                 </div>
 

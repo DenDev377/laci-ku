@@ -50,10 +50,10 @@ export default async function SettingsPage() {
   };
 
   return (
-    <div className="w-full max-w-4xl mx-auto px-4 sm:px-6 md:px-8 pb-12">
-      <div className="mb-8">
-        <h1 className="text-3xl font-bold text-gray-900 tracking-tight">Pengaturan Akun</h1>
-        <p className="text-slate-500 mt-1">
+    <div className="w-full max-w-4xl mx-auto pb-12">
+      <div className="mb-6">
+        <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 tracking-tight">Pengaturan Akun</h1>
+        <p className="text-slate-500 mt-1 text-sm">
           Kelola informasi profil pribadi dan preferensi keamanan akun Anda.
         </p>
       </div>

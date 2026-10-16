@@ -27,7 +27,7 @@ export default function Card({
 
       <div className="flex flex-wrap items-center gap-y-2 gap-x-3 relative z-10 mt-1 min-w-0">
         <h3
-          className="text-2xl font-bold tracking-tight text-gray-900 truncate"
+          className="text-xl sm:text-2xl font-bold tracking-tight text-gray-900 truncate"
           title={String(value)}
         >
           {value}

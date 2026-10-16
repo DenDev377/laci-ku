@@ -176,7 +176,7 @@ export default function SettingsForm({ user }: SettingsFormProps) {
       </div>
 
       {/* Tab Navigasi */}
-      <div className="flex border-b border-slate-200 gap-2">
+      <div className="flex border-b border-slate-200 gap-2 overflow-x-auto scrollbar-none -mx-4 px-4 sm:mx-0 sm:px-0">
         <button
           type="button"
           onClick={() => setActiveTab("profile")}

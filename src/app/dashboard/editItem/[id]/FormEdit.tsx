@@ -2,7 +2,7 @@
 import { useRef, useState } from "react";
 import { updateItem } from "@/actions/itemsAction";
 import { useRouter } from "next/navigation";
-import { FileText, Image, Plus, X, Loader2 } from "lucide-react";
+import { FileText, Image, Plus, X, Loader2, ArrowLeft } from "lucide-react";
 import { Category } from "@/generated/prisma/enums";
 import { EditFormProps } from "@/types/Items";
 
@@ -76,10 +76,24 @@ export default function FormEdit({ item }: EditFormProps) {
   };
 
   return (
-    <form action={actionHandler} ref={formRef} className="max-w-2xl mx-auto px-4 sm:px-6 md:px-8 py-8">
-      <div className="mb-8">
-        <h1 className="text-3xl font-bold text-gray-900">Edit Barang</h1>
-        <p className="text-gray-500 mt-2">Edit informasi barang berharga Anda</p>
+    <form action={actionHandler} ref={formRef} className="max-w-2xl mx-auto py-4 sm:py-8">
+      <div className="mb-6 flex items-start justify-between gap-4">
+        <div>
+          <button
+            type="button"
+            onClick={() => router.back()}
+            className="inline-flex items-center gap-1.5 text-xs font-semibold text-slate-500 hover:text-slate-900 mb-2 transition-colors cursor-pointer"
+          >
+            <ArrowLeft className="w-3.5 h-3.5" />
+            Kembali
+          </button>
+          <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 tracking-tight">
+            Edit Barang
+          </h1>
+          <p className="text-sm text-gray-500 mt-1">
+            Perbarui informasi barang atau dokumen bukti kepemilikan Anda
+          </p>
+        </div>
       </div>
 
       {error && (
@@ -264,12 +278,12 @@ export default function FormEdit({ item }: EditFormProps) {
                     <button
                       type="button"
                       onClick={() => removePreview(index)}
-                      className="absolute -top-2 -right-2 w-6 h-6 bg-red-500 text-white rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity hover:bg-red-600"
+                      className="absolute -top-2 -right-2 w-6 h-6 bg-rose-500 text-white rounded-full flex items-center justify-center opacity-100 sm:opacity-0 sm:group-hover:opacity-100 transition-opacity hover:bg-rose-600 shadow-xs cursor-pointer"
                       aria-label="Hapus foto"
                     >
                       <X className="w-4 h-4" />
                     </button>
-                    <span className="absolute bottom-1 right-1 bg-black/50 text-white text-xs px-1.5 py-0.5 rounded">
+                    <span className="absolute bottom-1 right-1 bg-black/60 text-white text-[10px] font-bold px-1.5 py-0.5 rounded">
                       {index + 1}
                     </span>
                   </div>
@@ -293,8 +307,8 @@ export default function FormEdit({ item }: EditFormProps) {
             Dokumen Pendukung (Struk/Garansi/Sertifikat)
           </legend>
           <div className="space-y-3">
-            <label className="flex flex-col items-center justify-center w-full h-32 border-2 border-dashed border-slate-300 rounded-xl cursor-pointer hover:border-blue-400 hover:bg-blue-50 transition-colors group">
-              <div className="flex flex-col items-center gap-2 text-gray-500 group-hover:text-blue-500">
+            <label className="flex flex-col items-center justify-center w-full h-32 border-2 border-dashed border-slate-300 rounded-xl cursor-pointer hover:border-gray-900 hover:bg-slate-50 transition-colors group">
+              <div className="flex flex-col items-center gap-2 text-gray-500 group-hover:text-gray-900">
                 <FileText className="w-8 h-8" />
                 <span className="text-sm font-medium">Upload dokumen (PDF, JPG, PNG)</span>
                 <span className="text-xs text-gray-400">Maksimal 10MB</span>
@@ -309,7 +323,7 @@ export default function FormEdit({ item }: EditFormProps) {
               />
             </label>
             {documentName && (
-              <p className="text-sm text-green-600 flex items-center gap-1">
+              <p className="text-sm text-emerald-600 font-semibold flex items-center gap-1.5 bg-emerald-50 p-2.5 rounded-lg border border-emerald-200">
                 <FileText className="w-4 h-4" /> {documentName}
               </p>
             )}
@@ -321,19 +335,19 @@ export default function FormEdit({ item }: EditFormProps) {
           </div>
         </fieldset>
 
-        {/* Action Buttons */}
-        <div className="flex justify-end gap-3 pt-4 border-t border-slate-200">
+        {/* Action Buttons - Stacked on Mobile, Row on Desktop */}
+        <div className="flex flex-col-reverse sm:flex-row justify-end gap-3 pt-4 border-t border-slate-200">
           <button
             type="button"
             onClick={() => router.back()}
-            className="px-6 py-2.5 text-sm font-medium text-gray-700 bg-white border border-slate-300 rounded-lg hover:bg-slate-50 transition-colors"
+            className="w-full sm:w-auto px-6 py-2.5 text-sm font-semibold text-gray-700 bg-white border border-slate-300 rounded-xl hover:bg-slate-50 transition-colors cursor-pointer text-center"
           >
             Batal
           </button>
           <button
             type="submit"
             disabled={loading}
-            className="px-6 py-2.5 text-sm font-medium text-white bg-blue-600 rounded-lg hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors flex items-center gap-2"
+            className="w-full sm:w-auto px-6 py-2.5 text-sm font-semibold text-white bg-gray-900 rounded-xl hover:bg-gray-800 disabled:opacity-50 disabled:cursor-not-allowed transition-colors flex items-center justify-center gap-2 shadow-xs cursor-pointer"
           >
             {loading ? (
               <>
@@ -341,14 +355,11 @@ export default function FormEdit({ item }: EditFormProps) {
                 Menyimpan...
               </>
             ) : (
-              <>
-                <Plus className="w-4 h-4" />
-                Simpan Perubahan
-              </>
+              "Simpan Perubahan"
             )}
           </button>
         </div>
       </div>
     </form>
   );
-}
+}

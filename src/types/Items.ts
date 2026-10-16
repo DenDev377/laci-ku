@@ -2,11 +2,13 @@ import { Prisma } from "@/generated/prisma/client";
 import { Category } from "@/generated/prisma/enums";
 
 export type ItemProps = {
-  dataItem: Prisma.ItemGetPayload<{ include: { photos: true } }>[];
+  dataItem: Prisma.ItemGetPayload<{ include: { photos: true; documents?: true } }>[];
   searchQuery?: string;
+  selectedCategory?: string;
 };
 export type DataRecentItemsProps = {
-  dataRecentItems: Prisma.ItemGetPayload<{ include: { photos: true } }>[];
+  dataRecentItems: Prisma.ItemGetPayload<{ include: { photos: true; documents?: true } }>[];
+  totalItemsCount?: number;
 };
 
 export type EditFormProps = {

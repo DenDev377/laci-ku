@@ -190,9 +190,36 @@ export default function NavbarDashboard() {
               </button>
             </div>
 
+            {/* User Profile Card on Mobile */}
+            <div className="p-4 mx-4 mt-4 mb-2 rounded-2xl bg-slate-50 border border-slate-200/80 flex items-center gap-3">
+              <div className="w-10 h-10 rounded-full bg-slate-900 text-white flex items-center justify-center font-bold text-sm shrink-0 shadow-xs">
+                {status === "loading" ? "..." : userInisial}
+              </div>
+              <div className="min-w-0 flex-1">
+                <p className="text-sm font-bold text-gray-900 truncate">
+                  {status === "loading" ? "Memuat..." : userName}
+                </p>
+                <p className="text-xs text-slate-500 truncate">
+                  {session?.user?.email || "Pengguna LaciKu"}
+                </p>
+              </div>
+            </div>
+
+            {/* Quick Add Button on Mobile */}
+            <div className="px-4 pt-2">
+              <Link
+                href="/dashboard/addItem"
+                onClick={() => setIsMobileMenuOpen(false)}
+                className="flex items-center justify-center gap-2 w-full py-2.5 px-3 rounded-xl bg-gray-900 text-white text-xs font-semibold shadow-xs hover:bg-gray-800 transition-colors"
+              >
+                <Plus className="w-4 h-4" />
+                <span>Tambah Barang Baru</span>
+              </Link>
+            </div>
+
             {/* Nav Menu */}
-            <nav className="flex-1 px-4 py-6 space-y-1 overflow-y-auto">
-              <div className="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-4 px-2">
+            <nav className="flex-1 px-4 py-4 space-y-1 overflow-y-auto">
+              <div className="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-3 px-2">
                 Menu Utama
               </div>
               {menuItems.map((item) => {
@@ -223,7 +250,7 @@ export default function NavbarDashboard() {
             <div className="p-4 border-t border-slate-200">
               <button
                 onClick={() => signOut({ callbackUrl: "/auth/login" })}
-                className="flex items-center gap-3 px-3 py-2.5 w-full rounded-lg text-sm font-medium text-slate-600 hover:bg-red-50 hover:text-red-600 transition-colors"
+                className="flex items-center gap-3 px-3 py-2.5 w-full rounded-xl text-sm font-medium text-slate-600 hover:bg-red-50 hover:text-red-600 transition-colors cursor-pointer"
               >
                 <LogOut className="w-4 h-4 text-slate-400" />
                 Keluar Aplikasi
