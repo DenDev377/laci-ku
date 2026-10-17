@@ -52,7 +52,6 @@ export default async function ItemsPage({ searchParams }: ItemsPageProps) {
     where: whereClause,
     include: {
       photos: true,
-      documents: true,
     },
     orderBy: {
       createdAt: "desc",
